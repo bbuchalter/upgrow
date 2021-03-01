@@ -11,6 +11,10 @@ module Upgrow
       # @return [ImmutableStruct] the new Immutable Struct class able to
       #   accommodate the given members.
       def new(*args, &block)
+        if args.any? { |member| !member.is_a?(Symbol) }
+          raise ArgumentError, 'all members must be symbols'
+        end
+
         struct_class = super(*args, keyword_init: true, &block)
 
         struct_class.members.each do |member|
