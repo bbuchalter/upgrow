@@ -1,3 +1,6 @@
 # frozen_string_literal: true
 
-Article = Upgrow::Model.new(:title, :body)
+class Article < Upgrow::Model
+  attribute :title
+  attribute :body
+end

@@ -16,19 +16,20 @@ module Upgrow
   # Record to be completely hidden away from any other areas of the app. There
   # are no references to Records in controllers, views, and anywhere else.
   # Repositories are invoked instead, which in turn return read-only Models.
-  class Model < ImmutableStruct
-    class << self
-      # Creates a new Model class with the given attributes. The Model will have
-      # also an id and timestamps.
-      #
-      # @param attributes [Array<Symbol>] the list of attributes the new Model
-      #   will have.
-      #
-      # @return [Model] a new Model class with the given attributes, id, and
-      #   timestamps.
-      def new(*attributes)
-        super(*attributes, :id, :created_at, :updated_at)
-      end
+  class Model < ImmutableObject
+    attribute :id
+    attribute :created_at
+    attribute :updated_at
+
+    # Initializes a new Model with the given member values.
+    #
+    # @param args [Hash<Symbol, Object>] the list of values for each attribute.
+    #
+    # @raise [KeyError] if an attribute is missing in the list of arguments.
+    def initialize(**args)
+      self.class.attribute_names.each { |key| args.fetch(key) }
+
+      super
     end
   end
 end
