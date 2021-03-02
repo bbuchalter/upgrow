@@ -69,14 +69,12 @@
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName"><span class='object_link'><a href="ImmutableStruct.html" title="Upgrow::ImmutableStruct (class)">ImmutableStruct</a></span></span>
+      <span class="inheritName"><span class='object_link'><a href="ImmutableObject.html" title="Upgrow::ImmutableObject (class)">ImmutableObject</a></span></span>
       
         <ul class="fullTree">
           <li>Object</li>
           
-            <li class="next">Struct</li>
-          
-            <li class="next"><span class='object_link'><a href="ImmutableStruct.html" title="Upgrow::ImmutableStruct (class)">ImmutableStruct</a></span></li>
+            <li class="next"><span class='object_link'><a href="ImmutableObject.html" title="Upgrow::ImmutableObject (class)">ImmutableObject</a></span></li>
           
             <li class="next">Upgrow::Model</li>
           
@@ -127,7 +125,7 @@
 
   
     <h2>
-      Class Method Summary
+      Instance Method Summary
       <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
@@ -136,12 +134,14 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#new-class_method" title="new (class method)">.<strong>new</strong>(*attributes)  &#x21d2; Model </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(**args)  &#x21d2; Model </a>
     
 
     
   </span>
   
+  
+    <span class="note title constructor">constructor</span>
   
   
   
@@ -151,7 +151,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Creates a new Model class with the given attributes.</p>
+<p>Initializes a new Model with the given member values.</p>
 </div></span>
   
 </li>
@@ -169,25 +169,15 @@
   
   
   
-  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="ImmutableStruct.html" title="Upgrow::ImmutableStruct (class)">ImmutableStruct</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ImmutableStruct.html#initialize-instance_method" title="Upgrow::ImmutableStruct#initialize (method)">#initialize</a></span></p>
-
-  <div id="constructor_details" class="method_details_list">
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="ImmutableObject.html" title="Upgrow::ImmutableObject (class)">ImmutableObject</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="ImmutableObject.html#attribute-class_method" title="Upgrow::ImmutableObject.attribute (method)">attribute</a></span></p>
+<div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
-    <p class="notice">This class inherits a constructor from <span class='object_link'><a href="ImmutableStruct.html#initialize-instance_method" title="Upgrow::ImmutableStruct#initialize (method)">Upgrow::ImmutableStruct</a></span></p>
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
   
-</div>
-
-
-  <div id="class_method_details" class="method_details_list">
-    <h2>Class Method Details</h2>
-
-    
-      <div class="method_details first">
-  <h3 class="signature first" id="new-class_method">
-  
-    .<strong>new</strong>(*attributes)  &#x21d2; <tt><span class='object_link'><a href="" title="Upgrow::Model (class)">Model</a></span></tt> 
+    #<strong>initialize</strong>(**args)  &#x21d2; <tt><span class='object_link'><a href="" title="Upgrow::Model (class)">Model</a></span></tt> 
   
 
   
@@ -196,7 +186,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Creates a new Model class with the given attributes. The Model will have also an id and timestamps.</p>
+<p>Initializes a new Model with the given member values.</p>
 
 
   </div>
@@ -207,35 +197,35 @@
   
     <li>
       
-        <span class='name'>attributes</span>
+        <span class='name'>args</span>
       
       
-        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+        <span class='type'>(<tt>Hash&lt;Symbol, Object&gt;</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'>
-<p>the list of attributes the new Model will have.</p>
+<p>the list of values for each attribute.</p>
 </div>
       
     </li>
   
 </ul>
 
-<p class="tag_title">Returns:</p>
-<ul class="return">
+<p class="tag_title">Raises:</p>
+<ul class="raise">
   
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="" title="Upgrow::Model (class)">Model</a></span></tt>)</span>
+        <span class='type'>(<tt>KeyError</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'>
-<p>a new Model class with the given attributes, id, and timestamps.</p>
+<p>if an attribute is missing in the list of arguments.</p>
 </div>
       
     </li>
@@ -250,25 +240,30 @@
 
 29
 30
-31</pre>
+31
+32
+33</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/upgrow/model.rb', line 29</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_attributes'>attributes</span><span class='rparen'>)</span>
-  <span class='kw'>super</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_attributes'>attributes</span><span class='comma'>,</span> <span class='symbol'>:id</span><span class='comma'>,</span> <span class='symbol'>:created_at</span><span class='comma'>,</span> <span class='symbol'>:updated_at</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_attribute_names'>attribute_names</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+
+  <span class='kw'>super</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-    
-  </div>
+  
+</div>
+
 
 </div>
 
       <div id="footer">
-  Generated on Mon Mar  1 15:31:28 2021 by
+  Generated on Tue Mar  2 17:19:44 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-3.0.0).
 </div>
