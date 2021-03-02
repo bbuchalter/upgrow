@@ -25,7 +25,7 @@ Objects with a single responsibility have a discrete public interface, with just
 
 Another way to phrase this principle is that objects should have only one reason to change. Since their task is well defined and discrete, it is obvious when code needs to be modified. Developers should not have to reason for too long to questions such as “should I put this code in that class?” if objects have a clear, single responsibility.
 
-In models, controllers, and even view helpers of most Rails apps what exist is a collection of big objects that do way too much. There is no definition about the single responsibility they hold anymore. These objects just do too much, and they are changed at any time for any reason.
+In Active Record models, controllers, and even view helpers of most Rails apps what exist is a collection of big objects that do way too much. There is no definition about the single responsibility they hold anymore. These objects just do too much, and they are changed at any time for any reason.
 
 It is important to note that not only big objects violate this principle. Sometimes even small objects could have an identity crisis for doing too much. That’s because a lot of the object’s behaviour is coming from its ancestor chain, which causes even objects with no direct methods to actually have an incredibly large public interface.
 

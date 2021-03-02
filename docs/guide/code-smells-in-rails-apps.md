@@ -69,33 +69,33 @@ Another recurring consequence of this coupling is that it makes testing view hel
 
 ## Active Record Callbacks
 
-Rails offers hooks to execute certain routines before, after, and around model operations. For example, checks and transformations before a record is saved in the database, or emails and jobs can be performed after a successful update.
+Rails offers hooks to execute certain routines before, after, and around Active Record operations. For example, checks and transformations before a record is saved in the database, or emails and jobs can be performed after a successful update.
 
-Since these callback methods are called implicitly by the framework, they can become inadvertently cumbersome. By simply reading the model code it is very hard to reason about everything that is happening around method calls and callbacks. Similar to controller callbacks, these can also apply to subsets of methods or be conditional to certain states, which further hinders understanding the possible logic paths and makes code very hard to change and maintain.
+Since these callback methods are called implicitly by the framework, they can become inadvertently cumbersome. By simply reading the Active Record model's code it is very hard to reason about everything that is happening around method calls and callbacks. Similar to controller callbacks, these can also apply to subsets of methods or be conditional to certain states, which further hinders understanding the possible logic paths and makes code very hard to change and maintain.
 
-The very existence of callbacks in models is a smell in itself: there is no reason not to replace them with explicit, direct method calls through more thoughtful and meaningful software design.
+The very existence of callbacks in Active Record models is a smell in itself: there is no reason not to replace them with explicit, direct method calls through more thoughtful and meaningful software design.
 
 ## Active Record Associations
 
 Active Record is a robust and complex framework that abstracts in Ruby all the interface with the relational database. A significant subset of the framework is dedicated to abstract operations around foreign keys and references between database tables, the Active Record Associations.
 
-Using macros such as “has many” and “belongs to”, associations allow models to define how they are linked to one another, dynamically defining methods that return collections of associated records for a given model instance. This is a classic behaviour in Rails apps that allow writing features around nested resources very easily.
+Using macros such as “has many” and “belongs to”, associations allow Active Record models to define how they are linked to one another, dynamically defining methods that return collections of associated records for a given Active Record model instance. This is a classic behaviour in Rails apps that allow writing features around nested resources very easily.
 
 In real world production apps, however, these shortcuts are often anti-patterns that make code interdependent, complex, and slow. Active Record Associations tie models together, creating unnecessary coupling between them. For most cases, models should not have knowledge of other Active Record Bases, since all their operations revolve around a single table.
 
 Another problem with Active Record Associations is that these methods implement lazy loading by default. The business logic might simply send a message to read data from an already loaded method and inadvertently end up performing database queries from the view layer. This is ultimately the source of performance issues such as N+1 queries.
 
-Giving models extra methods that reference and return instances of other model classes is also a precedent in which much of customizations are built upon, which makes it very hard to change code afterwards. The only instances in which models should reference other tables is to optimize database operations, such as joins.
+Giving Active Record models extra methods that reference and return instances of other model classes is also a precedent in which much of customizations are built upon, which makes it very hard to change code afterwards. The only instances in which models should reference other tables is to optimize database operations, such as joins.
 
-## Model Methods
+## Methods in Active Record Models
 
-This smell is also known as the “thin controller, fat model” antipattern. Looking for a suitable location to inject business logic, many developers prefer to place this in model classes. This is usually justified as a more object-oriented approach, since controllers easily become too procedural as seen in the previously listed smells.
+This smell is also known as the “thin controller, fat model” antipattern. Looking for a suitable location to inject business logic, many developers prefer to place this in Active Record classes. This is usually justified as a more object-oriented approach, since controllers easily become too procedural as seen in the previously listed smells.
 
-Over time, models get overloaded with all sorts of responsibilities, from validations that are unrelated to any of their attributes, to sending emails, making network calls, and enqueueing jobs. These are written as a multitude of class and instance methods, usually quite long ones.
+Over time, Active Record models get overloaded with all sorts of responsibilities, from validations that are unrelated to any of their attributes, to sending emails, making network calls, and enqueueing jobs. These are written as a multitude of class and instance methods, usually quite long ones.
 
-This excessive amount of methods and behaviour in models reach its worst point in specific classes known as the god objects of the app: resources that are so overloaded with behaviour that they have references to all other main constants of the codebase, as well as being referenced by everybody else.
+This excessive amount of methods and behaviour in Active Record models reach its worst point in specific classes known as the god objects of the app: resources that are so overloaded with behaviour that they have references to all other main constants of the codebase, as well as being referenced by everybody else.
 
-Models that are crowded with methods bear too many responsibilities and are very hard to change. And the harder they are to change, the less they are to be eligible for refactorings. These objects become then the oldest and hardest technical debts to be paid.
+Active Record classes that are crowded with methods bear too many responsibilities and are very hard to change. And the harder they are to change, the less they are to be eligible for refactorings. These objects become then the oldest and hardest technical debts to be paid.
 
 ## Private Methods in Active Record Models
 

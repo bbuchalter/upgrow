@@ -27,11 +27,11 @@ In views, the resulting data from business logic layers returned to the controll
 
 Views should receive the response data already processed and ready for presentation. It is not the responsibility of the view layer to encapsulate business logic of any kind. For example, conditionals in views should be rare, limited to logic that is strictly related to presentation concerns. If presentation logic is needed, these should go in view helpers in order to avoid polluting templates with Ruby code.
 
-## Models
+## Active Record Models
 
-There is no obvious answer about what the single responsibility of Rails models should be. That’s because by default they are already overloaded with features and capabilities. Even when models have an empty body, they are packed with multiple frameworks and mixins such as Active Record and Active Model, along their own submodules. Beyond being just a data transporting resource, the resulting object inherits a broad public interface, capable of doing validations, database persistence, transformations, callbacks, as well as wiring themselves with other models through associations.
+There is no obvious answer about what the single responsibility of Active Record models should be. That’s because by default they are already overloaded with features and capabilities. Even when Active Record classes have an empty body, they are packed with multiple frameworks and mixins such as Active Record and Active Model, along their own submodules. Beyond being just a data transporting resource, the resulting object inherits a broad public interface, capable of doing validations, database persistence, transformations, callbacks, as well as wiring themselves with other models through associations.
 
-In order to keep a sane codebase, it is crucial to select a single responsibility for these objects. The sensible choice is to assign to them the task of managing database persistence of particular sets of resources. In other words, a more thoughtful software design approach to Rails requires to strip Rails models from most of their features, and keep only what is directly related to database operations.
+In order to keep a sane codebase, it is crucial to select a single responsibility for these objects. The sensible choice is to assign to them the task of managing database persistence of particular sets of resources. In other words, a more thoughtful software design approach to Rails requires to strip Active Record models from most of their features, and keep only what is directly related to database operations.
 
 As discussed previously, the single responsibility of objects should be reflected in their naming. The term “model” is too vague to represent database persistence. Therefore, the classic Rails models should be renamed to “records”. They are the database layer of the codebase, using a subset of Active Record to deal with the DBMS.
 
