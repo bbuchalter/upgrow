@@ -26,7 +26,22 @@ module Upgrow
   # that task. By leveraging validation utilities from Active Model, Input
   # objects can not only perform the same validations as Records but also
   # seamlessly integrate with view helpers such as Rails form builders.
-  class Input
-    include ActiveModel::Model
+  class Input < ImmutableObject
+    include ActiveModel::Validations
+
+    # Creates a new Input instance.
+    #
+    # @param attributes [Hash<String, Object>] the values for each attribute.
+    def initialize(attributes = {})
+      @errors = ActiveModel::Errors.new(self)
+      super(**attributes.to_hash.transform_keys(&:to_sym))
+    end
+
+    private
+
+    # Overwrites the validation context writer so the Input's state is not
+    # mutated.
+    def validation_context=(_)
+    end
   end
 end
