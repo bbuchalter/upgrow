@@ -4,6 +4,17 @@
 
 # Upgrow
 
+**Heads Up!**
+
+**This project is a work in progress. We are working on documenting our
+best practices to help sustainable development for the long term with
+Ruby on Rails. The Upgrow gem is not yet available and the contents of
+the guide are still being amended, matured, and reviewed. That being
+said, feel free to follow the GitHub repo and stay tuned for the
+latest updates!**
+
+## A sustainable architecture for Ruby on Rails
+
 Ruby on Rails is the framework of choice for web apps at Shopify. It is an
 opinionated stack for quick and easy development of apps that need standard
 persistence with relational databases, an HTTP server, and HTML views.
