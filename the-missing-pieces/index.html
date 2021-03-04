@@ -684,7 +684,7 @@ Note that this Action always returns a successful Result.</p>
  result :article
 
  def perform(id)
-   result.success ArticleRepository.new.find(id)
+   result.success(article: ArticleRepository.new.find(id))
  end
 end
 </code></pre>
