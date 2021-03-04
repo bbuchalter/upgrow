@@ -713,7 +713,7 @@ class ShowArticleAction < Action
  result :article
 
  def perform(id)
-   result.success ArticleRepository.new.find(id)
+   result.success(article: ArticleRepository.new.find(id))
  end
 end
 ```
