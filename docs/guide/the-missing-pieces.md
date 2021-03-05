@@ -537,8 +537,8 @@ class Article
    @id = id
    @title = title
    @body = body
-  @created_at = created_at
-  @updated_at = updated_at
+   @created_at = created_at
+   @updated_at = updated_at
  end
 end
 ```
