@@ -15,6 +15,9 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
     template('repository.rb', "app/repositories/#{file_name.pluralize}_repository.rb")
   end
 
+  def create_input
+    template('input.rb', "app/inputs/#{file_name}_input.rb")
+  end
 
   private
 
@@ -35,6 +38,12 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
   def attributes_as_keyword_args_for_method_params
     attributes_names.map do |attribute|
       "#{attribute}: #{attribute}"
+    end.join(', ')
+  end
+
+  def attributes_as_symbols_for_method_params
+    attributes_names.map do |attribute|
+      ":#{attribute}"
     end.join(', ')
   end
 end
