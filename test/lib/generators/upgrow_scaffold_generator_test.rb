@@ -14,7 +14,7 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
       app/inputs/article_input.rb
       app/models/article.rb
       app/records/article_record.rb
-      app/repositories/articles_repository.rb
+      app/repositories/article_repository.rb
     )
   end
 

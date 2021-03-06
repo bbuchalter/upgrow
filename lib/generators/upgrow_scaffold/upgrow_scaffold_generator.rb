@@ -12,7 +12,7 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
   end
 
   def create_repository
-    template('repository.rb', "app/repositories/#{file_name.pluralize}_repository.rb")
+    template('repository.rb', "app/repositories/#{file_name}_repository.rb")
   end
 
   def create_input

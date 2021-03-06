@@ -2,9 +2,7 @@
 
 class ArticleRepository
   def all
-    ArticleRecord.all.map do |record|
-      to_model(record.attributes)
-    end
+    ArticleRecord.all.map { |record| to_model(record.attributes) }
   end
 
   def create(input)
