@@ -1,4 +1,4 @@
-require "test_helper"
+require "rails_helper"
 require "generators/upgrow_scaffold/upgrow_scaffold_generator"
 
 class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
