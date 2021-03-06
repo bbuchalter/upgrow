@@ -1,5 +1,7 @@
-class <%= class_name %>Input
-  include ActiveModel::Model
+# frozen_string_literal: true
 
-  attr_accessor <%= attributes_as_symbols_for_method_params %>
+class <%= class_name %>Input < Upgrow::Input
+<% attributes_names.each do|attribute| -%>
+  attribute :<%= attribute %>
+<% end -%>
 end
