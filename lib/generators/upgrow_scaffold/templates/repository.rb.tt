@@ -1,0 +1,24 @@
+class <%= class_name%>Repository
+  def all
+    <%= record_class_name %>.all
+  end
+
+  def create(title:, body:)
+    <%= record_class_name %>.create!(title: title, body: body)
+  end
+
+  def find(id)
+    <%= record_class_name %>.find(id)
+  end
+
+  def update(id, title:, body:)
+    record = find(id)
+    record.update!(title: title, body: body)
+    record
+  end
+
+  def delete(id)
+    record = find(id)
+    record.destroy!
+  end
+end

@@ -6,9 +6,18 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
     template('record.rb', "app/records/#{file_name}_record.rb")
   end
 
+  def create_repository
+    template('repository.rb', "app/repositories/#{file_name.pluralize}_repository.rb")
+  end
+
+
   private
 
   def parent_class_name_for_records
     'ApplicationRecord'
+  end
+
+  def record_class_name
+    "#{class_name}Record"
   end
 end
