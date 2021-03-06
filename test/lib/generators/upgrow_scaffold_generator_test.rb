@@ -14,6 +14,7 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
       app/actions/edit_article_action.rb
       app/actions/list_article_action.rb
       app/actions/show_article_action.rb
+      app/actions/update_article_action.rb
       app/inputs/article_input.rb
       app/models/article.rb
       app/records/article_record.rb

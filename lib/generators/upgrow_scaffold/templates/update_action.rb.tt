@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+class Update<%= class_name %>Action < Upgrow::Action
+  result :<%= singular_name %>
+
+  def perform(id, input)
+    if input.valid?
+      <%= singular_name %> = <%= repository_class_name %>.new.update(id, input)
+      result.success(<%= singular_name %>: <%= singular_name %>)
+    else
+      result.failure(input.errors)
+    end
+  end
+end

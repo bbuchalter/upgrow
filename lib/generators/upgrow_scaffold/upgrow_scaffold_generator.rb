@@ -43,6 +43,10 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
     template('list_action.rb', "app/actions/list_#{singular_name}_action.rb")
   end
 
+  def create_update_action
+    template('update_action.rb', "app/actions/update_#{singular_name}_action.rb")
+  end
+
   private
 
   def parent_class_name_for_records
