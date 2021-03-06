@@ -18,10 +18,14 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
     )
   end
 
+  def files_in_generator_destination
+    Dir.glob("#{destination_root}/**/*").select { |path| File.file?(path) }.map { |path| path.gsub(destination_root.to_s, '').slice(1..-1) }
+  end
+
   test "generator creates only expected files" do
-    files_before_generator = Dir.glob("#{destination_root}/**/*").select { |path| File.file?(path) }.map { |path| path.gsub(destination_root.to_s, '').slice(1..-1) }
+    files_before_generator = files_in_generator_destination
     run_generator
-    files_after_generator = Dir.glob("#{destination_root}/**/*").select { |path| File.file?(path) }.map { |path| path.gsub(destination_root.to_s, '').slice(1..-1) }
+    files_after_generator = files_in_generator_destination
 
     files_created_by_generator = (files_after_generator - files_before_generator).sort
     assert_equal files_expected_to_be_created_by_generator, files_created_by_generator
