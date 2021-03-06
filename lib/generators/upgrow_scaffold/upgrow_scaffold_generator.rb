@@ -1,5 +1,3 @@
-require "rails/generators/model_helpers"
-
 class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
   include Rails::Generators::ResourceHelpers
 
