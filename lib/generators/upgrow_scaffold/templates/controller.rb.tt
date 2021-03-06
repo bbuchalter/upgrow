@@ -1,0 +1,64 @@
+# frozen_string_literal: true
+
+class <%= controller_class_name %>Controller < ApplicationController
+  def index
+    @<%= plural_name %> = List<%= class_name %>Action.new.perform.<%= plural_name %>
+  end
+
+  def show
+    @<%= singular_name %> = Show<%= class_name %>Action.new.perform(params[:id]).<%= singular_name %>
+  end
+
+  def new
+    @input = <%= input_class_name %>.new
+  end
+
+  def edit
+    <%= singular_name %> = Edit<%= class_name %>Action.new.perform(params[:id]).<%= singular_name %>
+    @input = <%= input_class_name %>.new(
+      <%= attributes_as_model_args_for_method_params %>
+    )
+  end
+
+  def create
+    @input = <%= input_class_name %>.new(<%= singular_name %>_params)
+
+    Create<%= class_name %>Action.new.perform(@input)
+      .and_then do |<%= singular_name %>:|
+        redirect_to(
+          <%= singular_name %>_path(<%= singular_name %>.id), notice: '<%= class_name %> was successfully created.'
+        )
+      end
+      .or_else do |errors|
+        @errors = errors
+        render(:new)
+      end
+  end
+
+  def update
+    @input = <%= input_class_name %>.new(<%= singular_name %>_params)
+
+    Update<%= class_name %>Action.new.perform(params[:id], @input)
+      .and_then do |<%= singular_name %>:|
+        redirect_to(
+          <%= singular_name %>_path(<%= singular_name %>.id),
+          notice: '<%= class_name %> was successfully updated.'
+        )
+      end
+      .or_else do |errors|
+        @errors = errors
+        render(:edit)
+      end
+  end
+
+  def destroy
+    Delete<%= class_name %>Action.new.perform(params[:id])
+    redirect_to(<%= plural_name %>_url, notice: '<%= class_name %> was successfully destroyed.')
+  end
+
+  private
+
+  def <%= singular_name %>_params
+    params.require(:<%= singular_name %>_input).permit(<%= attributes_as_symbols_for_method_params %>)
+  end
+end

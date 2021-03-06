@@ -1,7 +1,7 @@
 require "rails/generators/model_helpers"
 
 class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
-  include Rails::Generators::ModelHelpers
+  include Rails::Generators::ResourceHelpers
 
   source_root File.expand_path('templates', __dir__)
   argument :attributes, type: :array, default: [], banner: "field[:type][:index] field[:type][:index]"
@@ -47,6 +47,10 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
     template('update_action.rb', "app/actions/update_#{singular_name}_action.rb")
   end
 
+  def create_controller
+    template('controller.rb', "app/controllers/#{controller_name}_controller.rb")
+  end
+
   private
 
   def parent_class_name_for_records
@@ -61,6 +65,10 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
     "#{class_name}Repository"
   end
 
+  def input_class_name
+    "#{class_name}Input"
+  end
+
   def attributes_as_keyword_args_for_method_signature
     attributes_names.map do |attribute|
       "#{attribute}:"
@@ -70,6 +78,12 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
   def attributes_as_input_args_for_method_params
     attributes_names.map do |attribute|
       "#{attribute}: input.#{attribute}"
+    end.join(', ')
+  end
+
+  def attributes_as_model_args_for_method_params
+    attributes_names.map do |attribute|
+      "#{attribute}: #{singular_name}.#{attribute}"
     end.join(', ')
   end
 
