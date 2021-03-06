@@ -16,7 +16,7 @@ changes can be introduced without much hassle.
 
 Granted, not all Rails apps require this thoughtful design exercise. It all
 comes down to the business strategies and scenarios where the technology is
-inserted into. For experiments, companies, and teams looking for short-term
+inserted into. For experiments, companies and teams looking for short-term
 solutions, or small cases in which growth is not expected, the simple Rails
 default architecture might be the perfect fit.
 
