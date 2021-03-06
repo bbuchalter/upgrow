@@ -15,6 +15,7 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
     files_created_by_generator = (files_after_generator - files_before_generator).sort
     expected_files_created_by_generator = %w(
       app/inputs/article_input.rb
+      app/models/article.rb
       app/records/article_record.rb
       app/repositories/articles_repository.rb
     )
@@ -79,6 +80,29 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
         include ActiveModel::Model
 
         attr_accessor :title, :body
+      end
+      EXPECTED_CONTENT
+
+      assert_equal expected_content, generated_content
+    end
+  end
+
+
+  test "generator creates app/models/article.rb" do
+    run_generator
+
+    assert_file 'app/models/article.rb' do |generated_content|
+      expected_content = <<~EXPECTED_CONTENT
+      class Article
+        attr_reader :id, :title, :body, :created_at, :updated_at
+
+        def initialize(id:, title:, body:, created_at:, updated_at:)
+          @id = id
+          @title = title
+          @body = body
+          @created_at = created_at
+          @updated_at = updated_at
+        end
       end
       EXPECTED_CONTENT
 
