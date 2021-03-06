@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+class Edit<%= class_name %>Action < Upgrow::Action
+  result :<%= singular_name %>
+
+  def perform(id)
+    article = <%= repository_class_name %>.new.find(id)
+
+    result.success(<%= singular_name %>: <%= singular_name %>)
+  end
+end

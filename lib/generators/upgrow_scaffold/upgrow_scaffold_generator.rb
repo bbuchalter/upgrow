@@ -35,6 +35,10 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
     template('delete_action.rb', "app/actions/delete_#{singular_name}_action.rb")
   end
 
+  def create_edit_action
+    template('edit_action.rb', "app/actions/edit_#{singular_name}_action.rb")
+  end
+
   private
 
   def parent_class_name_for_records
