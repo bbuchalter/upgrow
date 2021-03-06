@@ -23,6 +23,10 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
     template('model.rb', "app/models/#{file_name}.rb")
   end
 
+  def create_show_action
+    template('show_action.rb', "app/actions/show_#{singular_name}_action.rb")
+  end
+
   private
 
   def parent_class_name_for_records
@@ -31,6 +35,10 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
 
   def record_class_name
     "#{class_name}Record"
+  end
+
+  def repository_class_name
+    "#{class_name}Repository"
   end
 
   def attributes_as_keyword_args_for_method_signature

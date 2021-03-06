@@ -1,0 +1,7 @@
+class Show<%= class_name %>Action < Upgrow::Action
+  result :<%= singular_name %>
+
+  def perform(id)
+    result.success(<%= singular_name %>: <%=repository_class_name %>.new.find(id))
+  end
+end

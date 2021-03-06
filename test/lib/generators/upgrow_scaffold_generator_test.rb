@@ -14,6 +14,7 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
 
     files_created_by_generator = (files_after_generator - files_before_generator).sort
     expected_files_created_by_generator = %w(
+      app/actions/show_article_action.rb
       app/inputs/article_input.rb
       app/models/article.rb
       app/records/article_record.rb
@@ -112,6 +113,24 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
     end
     EXPECTED_CONTENT
     assert_file 'app/models/article.rb' do |generated_content|
+      assert_equal expected_content, generated_content
+    end
+  end
+
+  test "generator creates app/actions/show_article_action.rb" do
+    run_generator
+
+    expected_content = <<~EXPECTED_CONTENT
+    class ShowArticleAction < Upgrow::Action
+      result :article
+
+      def perform(id)
+        result.success(article: ArticleRepository.new.find(id))
+      end
+    end
+    EXPECTED_CONTENT
+
+    assert_file 'app/actions/show_article_action.rb' do |generated_content|
       assert_equal expected_content, generated_content
     end
   end

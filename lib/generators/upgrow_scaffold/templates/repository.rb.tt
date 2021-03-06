@@ -1,4 +1,4 @@
-class <%= class_name%>Repository
+class <%= repository_class_name %>
   def all
     <%= record_class_name %>.all.map { |record| to_model(record.attributes) }
   end
