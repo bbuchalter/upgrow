@@ -3,17 +3,17 @@ class <%= class_name%>Repository
     <%= record_class_name %>.all
   end
 
-  def create(title:, body:)
-    <%= record_class_name %>.create!(title: title, body: body)
+  def create(<%= attributes_as_keyword_args_for_method_signature %>)
+    <%= record_class_name %>.create!(<%= attributes_as_keyword_args_for_method_params %>)
   end
 
   def find(id)
     <%= record_class_name %>.find(id)
   end
 
-  def update(id, title:, body:)
+  def update(id, <%= attributes_as_keyword_args_for_method_signature %>)
     record = find(id)
-    record.update!(title: title, body: body)
+    record.update!(<%= attributes_as_keyword_args_for_method_params %>)
     record
   end
 
