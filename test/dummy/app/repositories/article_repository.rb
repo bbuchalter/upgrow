@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ArticleRepository
   def all
     ArticleRecord.all.map do |record|

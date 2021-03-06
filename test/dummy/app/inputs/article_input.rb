@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ArticleInput < Upgrow::Input
   attribute :title
   attribute :body

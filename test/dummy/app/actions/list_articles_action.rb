@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ListArticlesAction < Upgrow::Action
   result :articles
 
