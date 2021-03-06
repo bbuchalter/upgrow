@@ -10,6 +10,7 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
   def files_expected_to_be_created_by_generator
     %w(
       app/actions/create_article_action.rb
+      app/actions/delete_article_action.rb
       app/actions/show_article_action.rb
       app/inputs/article_input.rb
       app/models/article.rb

@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+class Delete<%= class_name %>Action < Upgrow::Action
+  def perform(id)
+    <%= repository_class_name %>.new.delete(id)
+    result.success
+  end
+end
