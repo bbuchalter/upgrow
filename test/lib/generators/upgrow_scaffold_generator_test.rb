@@ -31,138 +31,16 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
     assert_equal files_expected_to_be_created_by_generator, files_created_by_generator
   end
 
-  test "generator creates app/records/article_record.rb" do
+  test "generator creates same files as the dummy app" do
     run_generator
 
-    expected_content = <<~EXPECTED_CONTENT
-    class ArticleRecord < ApplicationRecord
-      self.table_name = 'articles'
-    end
-    EXPECTED_CONTENT
+    files_expected_to_be_created_by_generator.each do |generated_file_file_path|
+      test_dummy_app_file_path = 'test/dummy/' + generated_file_file_path
+      expected_content = File.read(test_dummy_app_file_path)
 
-    assert_file 'app/records/article_record.rb' do |generated_content|
-      assert_equal expected_content, generated_content
-    end
-  end
-
-  test "generator creates app/repositories/articles_repository.rb" do
-    run_generator
-
-    expected_content = <<~EXPECTED_CONTENT
-    class ArticleRepository
-      def all
-        ArticleRecord.all.map { |record| to_model(record.attributes) }
+      assert_file generated_file_file_path do |generated_content|
+        assert_equal expected_content, generated_content
       end
-
-      def create(input)
-        record = ArticleRecord.create!(title: input.title, body: input.body)
-        to_model(record.attributes)
-      end
-
-      def find(id)
-        record = ArticleRecord.find(id)
-        to_model(record.attributes)
-      end
-
-      def update(id, input)
-        record = ArticleRecord.find(id)
-        record.update!(title: input.title, body: input.body)
-        to_model(record.attributes)
-      end
-
-      def delete(id)
-        record = ArticleRecord.find(id)
-        record.destroy!
-      end
-
-      private
-
-      def to_model(attributes)
-        Article.new(**attributes.symbolize_keys)
-      end
-    end
-    EXPECTED_CONTENT
-
-    assert_file 'app/repositories/articles_repository.rb' do |generated_content|
-      assert_equal expected_content, generated_content
-    end
-  end
-
-  test "generator creates app/inputs/article_input.rb" do
-    run_generator
-
-    expected_content = <<~EXPECTED_CONTENT
-    class ArticleInput
-      include ActiveModel::Model
-
-      attr_accessor :title, :body
-    end
-    EXPECTED_CONTENT
-
-    assert_file 'app/inputs/article_input.rb' do |generated_content|
-      assert_equal expected_content, generated_content
-    end
-  end
-
-
-  test "generator creates app/models/article.rb" do
-    run_generator
-    expected_content = <<~EXPECTED_CONTENT
-    class Article
-      attr_reader :id, :title, :body, :created_at, :updated_at
-
-      def initialize(id:, title:, body:, created_at:, updated_at:)
-        @id = id
-        @title = title
-        @body = body
-        @created_at = created_at
-        @updated_at = updated_at
-      end
-    end
-    EXPECTED_CONTENT
-    assert_file 'app/models/article.rb' do |generated_content|
-      assert_equal expected_content, generated_content
-    end
-  end
-
-  test "generator creates app/actions/show_article_action.rb" do
-    run_generator
-
-    expected_content = <<~EXPECTED_CONTENT
-    class ShowArticleAction < Upgrow::Action
-      result :article
-
-      def perform(id)
-        result.success(article: ArticleRepository.new.find(id))
-      end
-    end
-    EXPECTED_CONTENT
-
-    assert_file 'app/actions/show_article_action.rb' do |generated_content|
-      assert_equal expected_content, generated_content
-    end
-  end
-
-  test "generator creates app/actions/create_article_action.rb" do
-    run_generator
-
-    expected_content = <<~EXPECTED_CONTENT
-    class CreateArticleAction < Upgrow::Action
-      result :article
-
-      def perform(input)
-        if input.valid?
-          article = ArticleRepository.new.create(input)
-          result.success(article: article)
-        else
-          result.failure(input.errors)
-        end
-      end
-    end
-    EXPECTED_CONTENT
-
-    assert_file 'app/actions/create_article_action.rb' do |generated_content|
-      assert_equal expected_content, generated_content
     end
   end
 end
