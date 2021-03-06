@@ -757,7 +757,7 @@ the controller as follows:
 class ArticlesController < ApplicationController
  # GET /articles
  def index
-   @articles = ListArticlesAction.new.perform.articles
+   @articles = ListArticleAction.new.perform.articles
  end
 
  # GET /articles/1

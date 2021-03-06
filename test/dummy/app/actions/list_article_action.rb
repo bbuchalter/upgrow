@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ListArticlesAction < Upgrow::Action
+class ListArticleAction < Upgrow::Action
   result :articles
 
   def perform

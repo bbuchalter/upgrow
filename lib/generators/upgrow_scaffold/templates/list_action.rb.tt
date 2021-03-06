@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+class List<%= class_name %>Action < Upgrow::Action
+  result :<%= plural_name %>
+
+  def perform
+    result.success(<%= plural_name %>: <%= repository_class_name %>.new.all)
+  end
+end

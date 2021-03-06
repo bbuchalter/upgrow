@@ -2,7 +2,7 @@
 
 class ArticlesController < ApplicationController
   def index
-    @articles = ListArticlesAction.new.perform.articles
+    @articles = ListArticleAction.new.perform.articles
   end
 
   def show
