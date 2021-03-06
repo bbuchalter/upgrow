@@ -29,15 +29,9 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
     "#{class_name}Record"
   end
 
-  def attributes_as_keyword_args_for_method_signature
+  def attributes_as_input_args_for_method_params
     attributes_names.map do |attribute|
-      "#{attribute}:"
-    end.join(', ')
-  end
-
-  def attributes_as_keyword_args_for_method_params
-    attributes_names.map do |attribute|
-      "#{attribute}: #{attribute}"
+      "#{attribute}: input.#{attribute}"
     end.join(', ')
   end
 

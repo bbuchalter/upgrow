@@ -45,17 +45,17 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
           ArticleRecord.all
         end
 
-        def create(title:, body:)
-          ArticleRecord.create!(title: title, body: body)
+        def create(input)
+          ArticleRecord.create!(title: input.title, body: input.body)
         end
 
         def find(id)
           ArticleRecord.find(id)
         end
 
-        def update(id, title:, body:)
+        def update(id, input)
           record = find(id)
-          record.update!(title: title, body: body)
+          record.update!(title: input.title, body: input.body)
           record
         end
 
