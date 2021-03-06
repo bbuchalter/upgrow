@@ -7,13 +7,8 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
   setup :prepare_destination
   arguments %w(article title:string body:text)
 
-  test "generator creates only expected files" do
-    files_before_generator = Dir.glob("#{destination_root}/**/*").select { |path| File.file?(path) }.map { |path| path.gsub(destination_root.to_s, '').slice(1..-1) }
-    run_generator
-    files_after_generator = Dir.glob("#{destination_root}/**/*").select { |path| File.file?(path) }.map { |path| path.gsub(destination_root.to_s, '').slice(1..-1) }
-
-    files_created_by_generator = (files_after_generator - files_before_generator).sort
-    expected_files_created_by_generator = %w(
+  def files_expected_to_be_created_by_generator
+    %w(
       app/actions/create_article_action.rb
       app/actions/show_article_action.rb
       app/inputs/article_input.rb
@@ -21,7 +16,15 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
       app/records/article_record.rb
       app/repositories/articles_repository.rb
     )
-    assert_equal expected_files_created_by_generator, files_created_by_generator
+  end
+
+  test "generator creates only expected files" do
+    files_before_generator = Dir.glob("#{destination_root}/**/*").select { |path| File.file?(path) }.map { |path| path.gsub(destination_root.to_s, '').slice(1..-1) }
+    run_generator
+    files_after_generator = Dir.glob("#{destination_root}/**/*").select { |path| File.file?(path) }.map { |path| path.gsub(destination_root.to_s, '').slice(1..-1) }
+
+    files_created_by_generator = (files_after_generator - files_before_generator).sort
+    assert_equal files_expected_to_be_created_by_generator, files_created_by_generator
   end
 
   test "generator creates app/records/article_record.rb" do
