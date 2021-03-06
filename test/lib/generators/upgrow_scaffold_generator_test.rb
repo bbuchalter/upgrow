@@ -25,13 +25,13 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
   test "generator creates app/records/article_record.rb" do
     run_generator
 
-    assert_file 'app/records/article_record.rb' do |generated_content|
-      expected_content = <<~EXPECTED_CONTENT
-      class ArticleRecord < ApplicationRecord
-        self.table_name = 'articles'
-      end
-      EXPECTED_CONTENT
+    expected_content = <<~EXPECTED_CONTENT
+    class ArticleRecord < ApplicationRecord
+      self.table_name = 'articles'
+    end
+    EXPECTED_CONTENT
 
+    assert_file 'app/records/article_record.rb' do |generated_content|
       assert_equal expected_content, generated_content
     end
   end
@@ -39,42 +39,42 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
   test "generator creates app/repositories/articles_repository.rb" do
     run_generator
 
-    assert_file 'app/repositories/articles_repository.rb' do |generated_content|
-      expected_content = <<~EXPECTED_CONTENT
-      class ArticleRepository
-        def all
-          ArticleRecord.all.map { |record| to_model(record.attributes) }
-        end
-
-        def create(input)
-          record = ArticleRecord.create!(title: input.title, body: input.body)
-          to_model(record.attributes)
-        end
-
-        def find(id)
-          record = ArticleRecord.find(id)
-          to_model(record.attributes)
-        end
-
-        def update(id, input)
-          record = ArticleRecord.find(id)
-          record.update!(title: input.title, body: input.body)
-          to_model(record.attributes)
-        end
-
-        def delete(id)
-          record = ArticleRecord.find(id)
-          record.destroy!
-        end
-
-        private
-
-        def to_model(attributes)
-          Article.new(**attributes.symbolize_keys)
-        end
+    expected_content = <<~EXPECTED_CONTENT
+    class ArticleRepository
+      def all
+        ArticleRecord.all.map { |record| to_model(record.attributes) }
       end
-      EXPECTED_CONTENT
 
+      def create(input)
+        record = ArticleRecord.create!(title: input.title, body: input.body)
+        to_model(record.attributes)
+      end
+
+      def find(id)
+        record = ArticleRecord.find(id)
+        to_model(record.attributes)
+      end
+
+      def update(id, input)
+        record = ArticleRecord.find(id)
+        record.update!(title: input.title, body: input.body)
+        to_model(record.attributes)
+      end
+
+      def delete(id)
+        record = ArticleRecord.find(id)
+        record.destroy!
+      end
+
+      private
+
+      def to_model(attributes)
+        Article.new(**attributes.symbolize_keys)
+      end
+    end
+    EXPECTED_CONTENT
+
+    assert_file 'app/repositories/articles_repository.rb' do |generated_content|
       assert_equal expected_content, generated_content
     end
   end
@@ -82,15 +82,15 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
   test "generator creates app/inputs/article_input.rb" do
     run_generator
 
+    expected_content = <<~EXPECTED_CONTENT
+    class ArticleInput
+      include ActiveModel::Model
+
+      attr_accessor :title, :body
+    end
+    EXPECTED_CONTENT
+
     assert_file 'app/inputs/article_input.rb' do |generated_content|
-      expected_content = <<~EXPECTED_CONTENT
-      class ArticleInput
-        include ActiveModel::Model
-
-        attr_accessor :title, :body
-      end
-      EXPECTED_CONTENT
-
       assert_equal expected_content, generated_content
     end
   end
@@ -98,22 +98,20 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
 
   test "generator creates app/models/article.rb" do
     run_generator
+    expected_content = <<~EXPECTED_CONTENT
+    class Article
+      attr_reader :id, :title, :body, :created_at, :updated_at
 
-    assert_file 'app/models/article.rb' do |generated_content|
-      expected_content = <<~EXPECTED_CONTENT
-      class Article
-        attr_reader :id, :title, :body, :created_at, :updated_at
-
-        def initialize(id:, title:, body:, created_at:, updated_at:)
-          @id = id
-          @title = title
-          @body = body
-          @created_at = created_at
-          @updated_at = updated_at
-        end
+      def initialize(id:, title:, body:, created_at:, updated_at:)
+        @id = id
+        @title = title
+        @body = body
+        @created_at = created_at
+        @updated_at = updated_at
       end
-      EXPECTED_CONTENT
-
+    end
+    EXPECTED_CONTENT
+    assert_file 'app/models/article.rb' do |generated_content|
       assert_equal expected_content, generated_content
     end
   end
