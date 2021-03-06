@@ -1,12 +1,7 @@
-class <%= class_name %>
-  attr_reader :id, <%= attributes_as_symbols_for_method_params %>, :created_at, :updated_at
+# frozen_string_literal: true
 
-  def initialize(id:, <%= attributes_as_keyword_args_for_method_signature %>, created_at:, updated_at:)
-    @id = id
+class <%= class_name %> < Upgrow::Model
 <% attributes_names.each do|attribute| -%>
-    @<%= attribute %> = <%= attribute %>
+  attribute :<%= attribute %>
 <% end -%>
-    @created_at = created_at
-    @updated_at = updated_at
-  end
 end

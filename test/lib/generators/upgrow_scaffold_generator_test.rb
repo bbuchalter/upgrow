@@ -36,7 +36,17 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
 
     files_expected_to_be_created_by_generator.each do |generated_file_file_path|
       test_dummy_app_file_path = 'test/dummy/' + generated_file_file_path
+
       expected_content = File.read(test_dummy_app_file_path)
+
+      if generated_file_file_path.match?(/inputs\/article_input.rb$/)
+        content_to_exclude = <<-EXCLUDE_WITH_WHITESPACE
+
+  validates :title, presence: true
+  validates :body, presence: true, length: { minimum: 10 }
+          EXCLUDE_WITH_WHITESPACE
+        expected_content = expected_content.gsub(content_to_exclude, '')
+      end
 
       assert_file generated_file_file_path do |generated_content|
         assert_equal expected_content, generated_content
