@@ -1,0 +1,12 @@
+class Create<%= class_name %>Action < Upgrow::Action
+  result :<%=singular_name %>
+
+  def perform(input)
+    if input.valid?
+      <%=singular_name %> = <%= repository_class_name %>.new.create(input)
+      result.success(<%=singular_name %>: <%=singular_name %>)
+    else
+      result.failure(input.errors)
+    end
+  end
+end
