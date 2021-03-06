@@ -43,26 +43,34 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
       expected_content = <<~EXPECTED_CONTENT
       class ArticleRepository
         def all
-          ArticleRecord.all
+          ArticleRecord.all.map { |record| to_model(record.attributes) }
         end
 
         def create(input)
-          ArticleRecord.create!(title: input.title, body: input.body)
+          record = ArticleRecord.create!(title: input.title, body: input.body)
+          to_model(record.attributes)
         end
 
         def find(id)
-          ArticleRecord.find(id)
+          record = ArticleRecord.find(id)
+          to_model(record.attributes)
         end
 
         def update(id, input)
-          record = find(id)
+          record = ArticleRecord.find(id)
           record.update!(title: input.title, body: input.body)
-          record
+          to_model(record.attributes)
         end
 
         def delete(id)
-          record = find(id)
+          record = ArticleRecord.find(id)
           record.destroy!
+        end
+
+        private
+
+        def to_model(attributes)
+          Article.new(**attributes.symbolize_keys)
         end
       end
       EXPECTED_CONTENT
