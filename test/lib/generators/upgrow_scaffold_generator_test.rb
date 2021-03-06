@@ -18,6 +18,12 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
     )
   end
 
+  def dummy_app_files_with_content_that_is_not_from_generator
+    {
+      'app/inputs/article_input.rb' => "\n\n  validates :title, presence: true\n  validates :body, presence: true, length: { minimum: 10 }"
+    }
+  end
+
   def files_in_generator_destination
     Dir.glob("#{destination_root}/**/*").select { |path| File.file?(path) }.map { |path| path.gsub(destination_root.to_s, '').slice(1..-1) }
   end
@@ -38,13 +44,9 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
       test_dummy_app_file_path = 'test/dummy/' + generated_file_file_path
 
       expected_content = File.read(test_dummy_app_file_path)
+      content_to_exclude = dummy_app_files_with_content_that_is_not_from_generator[generated_file_file_path]
 
-      if generated_file_file_path.match?(/inputs\/article_input.rb$/)
-        content_to_exclude = <<-EXCLUDE_WITH_WHITESPACE
-
-  validates :title, presence: true
-  validates :body, presence: true, length: { minimum: 10 }
-          EXCLUDE_WITH_WHITESPACE
+      if content_to_exclude
         expected_content = expected_content.gsub(content_to_exclude, '')
       end
 
