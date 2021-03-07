@@ -9,8 +9,19 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
   arguments ['article', 'title:string', 'body:text']
 
   def files_expected_to_be_created_by_generator
-    ['app/actions/create_article_action.rb',
-     'app/actions/delete_article_action.rb', 'app/actions/edit_article_action.rb', 'app/actions/list_article_action.rb', 'app/actions/show_article_action.rb', 'app/actions/update_article_action.rb', 'app/controllers/articles_controller.rb', 'app/inputs/article_input.rb', 'app/models/article.rb', 'app/records/article_record.rb', 'app/repositories/article_repository.rb']
+    [
+      'app/actions/create_article_action.rb',
+      'app/actions/delete_article_action.rb',
+      'app/actions/edit_article_action.rb',
+      'app/actions/list_article_action.rb',
+      'app/actions/show_article_action.rb',
+      'app/actions/update_article_action.rb',
+      'app/controllers/articles_controller.rb',
+      'app/inputs/article_input.rb',
+      'app/models/article.rb',
+      'app/records/article_record.rb',
+      'app/repositories/article_repository.rb',
+    ]
   end
 
   def dummy_app_files_with_content_that_is_not_from_generator

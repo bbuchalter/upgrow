@@ -7,8 +7,12 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
   include Rails::Generators::ResourceHelpers
 
   source_root File.expand_path('templates', __dir__)
-  argument :attributes, type: :array, default: [],
-banner: 'field[:type][:index] field[:type][:index]'
+  argument(
+    :attributes,
+    type: :array,
+    default: [],
+    banner: 'field[:type][:index] field[:type][:index]'
+  )
 
   # Creates record
   def create_record
