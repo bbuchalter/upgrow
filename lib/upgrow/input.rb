@@ -36,12 +36,5 @@ module Upgrow
       @errors = ActiveModel::Errors.new(self)
       super(**attributes.to_hash.transform_keys(&:to_sym))
     end
-
-    private
-
-    # Overwrites the validation context writer so the Input's state is not
-    # mutated.
-    def validation_context=(_)
-    end
   end
 end

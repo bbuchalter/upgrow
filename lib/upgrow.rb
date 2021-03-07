@@ -9,6 +9,8 @@ require_relative 'upgrow/input'
 require_relative 'upgrow/model'
 require_relative 'upgrow/result'
 
+require_relative 'upgrow/rails_extensions/prevent_conditional_validations'
+
 # The gem's main namespace.
 module Upgrow
 end
