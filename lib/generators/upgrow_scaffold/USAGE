@@ -1,8 +1,8 @@
 Description:
-    Explain the generator
+    Generate scaffolding using the Upgrow patterns.
 
-Example:
-    bin/rails generate upgrow_scaffold Thing
-
-    This will create:
-        what/will/it/create
+Examples:
+    `bin/rails generate upgrow_scaffold post`
+    `bin/rails generate upgrow_scaffold post title:string body:text published:boolean`
+    `bin/rails generate upgrow_scaffold purchase amount:decimal tracking_id:integer:uniq`
+    `bin/rails generate upgrow_scaffold user email:uniq password:digest`
