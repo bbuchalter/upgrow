@@ -1,48 +1,44 @@
-require "rails_helper"
-require "generators/upgrow_scaffold/upgrow_scaffold_generator"
+# frozen_string_literal: true
+require 'rails_helper'
+require 'generators/upgrow_scaffold/upgrow_scaffold_generator'
 
 class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
   tests UpgrowScaffoldGenerator
   destination Rails.root.join('tmp/generators')
   setup :prepare_destination
-  arguments %w(article title:string body:text)
+  arguments ['article', 'title:string', 'body:text']
 
   def files_expected_to_be_created_by_generator
-    %w(
-      app/actions/create_article_action.rb
-      app/actions/delete_article_action.rb
-      app/actions/edit_article_action.rb
-      app/actions/list_article_action.rb
-      app/actions/show_article_action.rb
-      app/actions/update_article_action.rb
-      app/controllers/articles_controller.rb
-      app/inputs/article_input.rb
-      app/models/article.rb
-      app/records/article_record.rb
-      app/repositories/article_repository.rb
-    )
+    ['app/actions/create_article_action.rb',
+     'app/actions/delete_article_action.rb', 'app/actions/edit_article_action.rb', 'app/actions/list_article_action.rb', 'app/actions/show_article_action.rb', 'app/actions/update_article_action.rb', 'app/controllers/articles_controller.rb', 'app/inputs/article_input.rb', 'app/models/article.rb', 'app/records/article_record.rb', 'app/repositories/article_repository.rb']
   end
 
   def dummy_app_files_with_content_that_is_not_from_generator
     {
-      'app/inputs/article_input.rb' => "\n\n  validates :title, presence: true\n  validates :body, presence: true, length: { minimum: 10 }"
+      'app/inputs/article_input.rb' => "\n\n  validates :title, presence: true\n  validates :body, presence: true, length: { minimum: 10 }",
     }
   end
 
   def files_in_generator_destination
-    Dir.glob("#{destination_root}/**/*").select { |path| File.file?(path) }.map { |path| path.gsub(destination_root.to_s, '').slice(1..-1) }
+    Dir.glob("#{destination_root}/**/*").select do |path|
+      File.file?(path)
+    end .map do |path|
+      path.gsub(destination_root.to_s,
+    '').slice(1..-1)
+    end
   end
 
-  test "generator creates only expected files" do
+  test 'generator creates only expected files' do
     files_before_generator = files_in_generator_destination
     run_generator
     files_after_generator = files_in_generator_destination
 
     files_created_by_generator = (files_after_generator - files_before_generator).sort
-    assert_equal files_expected_to_be_created_by_generator, files_created_by_generator
+    assert_equal files_expected_to_be_created_by_generator,
+files_created_by_generator
   end
 
-  test "generator creates same files as the dummy app" do
+  test 'generator creates same files as the dummy app' do
     run_generator
 
     files_expected_to_be_created_by_generator.each do |generated_file_file_path|

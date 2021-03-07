@@ -1,8 +1,10 @@
+# frozen_string_literal: true
 class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
   include Rails::Generators::ResourceHelpers
 
   source_root File.expand_path('templates', __dir__)
-  argument :attributes, type: :array, default: [], banner: "field[:type][:index] field[:type][:index]"
+  argument :attributes, type: :array, default: [],
+banner: 'field[:type][:index] field[:type][:index]'
 
   # When a generator is invoked, each public method in the generator is executed sequentially in the order that it is defined.
   def create_record
@@ -26,11 +28,13 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
   end
 
   def create_create_action
-    template('create_action.rb', "app/actions/create_#{singular_name}_action.rb")
+    template('create_action.rb',
+"app/actions/create_#{singular_name}_action.rb")
   end
 
   def create_delete_action
-    template('delete_action.rb', "app/actions/delete_#{singular_name}_action.rb")
+    template('delete_action.rb',
+"app/actions/delete_#{singular_name}_action.rb")
   end
 
   def create_edit_action
@@ -42,11 +46,13 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
   end
 
   def create_update_action
-    template('update_action.rb', "app/actions/update_#{singular_name}_action.rb")
+    template('update_action.rb',
+"app/actions/update_#{singular_name}_action.rb")
   end
 
   def create_controller
-    template('controller.rb', "app/controllers/#{controller_name}_controller.rb")
+    template('controller.rb',
+"app/controllers/#{controller_name}_controller.rb")
   end
 
   private
