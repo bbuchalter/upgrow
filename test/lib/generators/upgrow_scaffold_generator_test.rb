@@ -24,9 +24,11 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
     ]
   end
 
-  def dummy_app_files_with_content_that_is_not_from_generator
+  def test_app_file_content_to_exclude
     {
-      'app/inputs/article_input.rb' => "\n\n  validates :title, presence: true\n  validates :body, presence: true, length: { minimum: 10 }",
+      'app/inputs/article_input.rb' => "\n\n\
+  validates :title, presence: true\n\
+  validates :body, presence: true, length: { minimum: 10 }",
     }
   end
 
@@ -44,25 +46,27 @@ class UpgrowScaffoldGeneratorTest < Rails::Generators::TestCase
     run_generator
     files_after_generator = files_in_generator_destination
 
-    files_created_by_generator = (files_after_generator - files_before_generator).sort
-    assert_equal files_expected_to_be_created_by_generator,
-files_created_by_generator
+    files_created_by_generator = files_after_generator - files_before_generator
+    assert_equal(
+      files_expected_to_be_created_by_generator,
+      files_created_by_generator.sort
+    )
   end
 
-  test 'generator creates same files as the dummy app' do
+  test 'generator creates same files as the test app' do
     run_generator
 
-    files_expected_to_be_created_by_generator.each do |generated_file_file_path|
-      test_dummy_app_file_path = 'test/dummy/' + generated_file_file_path
+    files_expected_to_be_created_by_generator.each do |generated_file_path|
+      test_app_file_path = 'test/dummy/' + generated_file_path
 
-      expected_content = File.read(test_dummy_app_file_path)
-      content_to_exclude = dummy_app_files_with_content_that_is_not_from_generator[generated_file_file_path]
+      expected_content = File.read(test_app_file_path)
+      content_to_exclude = test_app_file_content_to_exclude[generated_file_path]
 
       if content_to_exclude
         expected_content = expected_content.gsub(content_to_exclude, '')
       end
 
-      assert_file generated_file_file_path do |generated_content|
+      assert_file generated_file_path do |generated_content|
         assert_equal expected_content, generated_content
       end
     end
