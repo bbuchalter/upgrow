@@ -1,4 +1,8 @@
 # frozen_string_literal: true
+
+# Implements the `upgrow_scaffold` generator.
+# When a generator is invoked, each public method in the generator
+# is executed sequentially in the order that it is defined.
 class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
   include Rails::Generators::ResourceHelpers
 
@@ -6,50 +10,60 @@ class UpgrowScaffoldGenerator < Rails::Generators::NamedBase
   argument :attributes, type: :array, default: [],
 banner: 'field[:type][:index] field[:type][:index]'
 
-  # When a generator is invoked, each public method in the generator is executed sequentially in the order that it is defined.
+  # Creates record
   def create_record
     template('record.rb', "app/records/#{file_name}_record.rb")
   end
 
+  # Creates repoistory
   def create_repository
     template('repository.rb', "app/repositories/#{file_name}_repository.rb")
   end
 
+  # Creates input
   def create_input
     template('input.rb', "app/inputs/#{file_name}_input.rb")
   end
 
+  # Creates model
   def create_model
     template('model.rb', "app/models/#{file_name}.rb")
   end
 
+  # Creates show action
   def create_show_action
     template('show_action.rb', "app/actions/show_#{singular_name}_action.rb")
   end
 
+  # Creates create action
   def create_create_action
     template('create_action.rb',
 "app/actions/create_#{singular_name}_action.rb")
   end
 
+  # Creates delete action
   def create_delete_action
     template('delete_action.rb',
 "app/actions/delete_#{singular_name}_action.rb")
   end
 
+  # Creates edit action
   def create_edit_action
     template('edit_action.rb', "app/actions/edit_#{singular_name}_action.rb")
   end
 
+  # Creates list action
   def create_list_action
     template('list_action.rb', "app/actions/list_#{singular_name}_action.rb")
   end
 
+  # Creates update action
   def create_update_action
     template('update_action.rb',
 "app/actions/update_#{singular_name}_action.rb")
   end
 
+  # Creates controller
   def create_controller
     template('controller.rb',
 "app/controllers/#{controller_name}_controller.rb")
